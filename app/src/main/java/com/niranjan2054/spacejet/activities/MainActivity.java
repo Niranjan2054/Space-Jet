@@ -1,14 +1,14 @@
-package com.niranjan2054.spacejet;
+package com.niranjan2054.spacejet.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
+
+import com.niranjan2054.spacejet.R;
 
 public class MainActivity extends AppCompatActivity {
 protected ImageView buttonPlay;

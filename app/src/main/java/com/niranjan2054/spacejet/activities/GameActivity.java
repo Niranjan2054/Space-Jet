@@ -1,8 +1,10 @@
-package com.niranjan2054.spacejet;
+package com.niranjan2054.spacejet.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.niranjan2054.spacejet.R;
 
 public class GameActivity extends AppCompatActivity {
 
