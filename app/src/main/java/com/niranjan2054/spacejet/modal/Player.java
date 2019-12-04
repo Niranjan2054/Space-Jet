@@ -3,6 +3,7 @@ package com.niranjan2054.spacejet.modal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.widget.ScrollView;
 
 import com.niranjan2054.spacejet.R;
 
@@ -32,13 +33,15 @@ public class Player {
     private int maxY;
     private int minY;
 
-    public Player(Context context){
+    public Player(Context context, int screenX, int screenY){
        x = 75;
        y = 50;
        speed =1;
        //Getting bitmap from drawable resources
        bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.player);
        boosting = false;
+       minY = 0;
+       maxY = screenY-bitmap.getHeight();
     }
 
     public Bitmap getBitmap() {

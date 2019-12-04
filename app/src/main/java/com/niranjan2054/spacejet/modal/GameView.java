@@ -21,10 +21,10 @@ public class GameView extends SurfaceView implements Runnable {
     private SurfaceHolder surfaceHolder;
 
     private Thread gameThread = null;
-    public GameView(Context context) {
+    public GameView(Context context,int screenX, int screenY) {
         super(context);
         //initializing player object
-        player = new Player(context);
+        player = new Player(context,screenX,screenY);
 
         //initializing drawing object
         surfaceHolder = getHolder();

@@ -3,7 +3,9 @@ package com.niranjan2054.spacejet.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.ActivityInfo;
+import android.graphics.Point;
 import android.os.Bundle;
+import android.view.Display;
 
 import com.niranjan2054.spacejet.R;
 import com.niranjan2054.spacejet.modal.GameView;
@@ -15,7 +17,11 @@ private GameView gameView;
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_game);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        gameView = new GameView(this);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        gameView = new GameView(this,size.x,size.y);
+
         setContentView(gameView);
     }
     @Override
