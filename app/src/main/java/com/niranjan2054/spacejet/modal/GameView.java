@@ -34,7 +34,10 @@ public class GameView extends SurfaceView implements Runnable {
     private Enemy[] enemies;
     private int enemyCount = 3;
 
+    private int score =0;
+    private int enemyLive = 3;
 
+    private Boom boom;
     public GameView(Context context,int screenX, int screenY) {
         super(context);
         //initializing player object
@@ -54,6 +57,7 @@ public class GameView extends SurfaceView implements Runnable {
         for(int i =0; i<enemyCount;i++){
             enemies[i] = new Enemy(context,screenX,screenY);
         }
+        boom = new Boom(context);
     }
 
     public GameView(Context context, AttributeSet attrs) {
@@ -81,12 +85,12 @@ public class GameView extends SurfaceView implements Runnable {
             //locking canvas
             canvas = surfaceHolder.lockCanvas();
             //drawing the background color for canvas
-            canvas.drawColor(Color.BLACK);
             //Drawing all stars
             for(int i =0;i<starCount;i++){
                 paint.setStrokeWidth(stars[i].getStarWidth());
                 canvas.drawPoint(stars[i].getX(),stars[i].getY(),paint);
             }
+            canvas.drawColor(Color.BLACK);
 
             //Drawing the player
             canvas.drawBitmap(
@@ -103,8 +107,19 @@ public class GameView extends SurfaceView implements Runnable {
                         enemies[i].getY(),
                         paint);
             }
+            canvas.drawBitmap(
+                    boom.getBitmap(),
+                    boom.getX(),
+                    boom.getY(),
+                    paint);
+            paint.setColor(Color.WHITE);
+            paint.setTextSize(40);
+            canvas.drawText("Score: "+score+"                  Enemy Live: "+enemyLive,40,40,paint);
+
 
             surfaceHolder.unlockCanvasAndPost(canvas);
+            boom.setX(-250);
+            boom.setY(-250);
         }
     }
 
@@ -126,7 +141,10 @@ public class GameView extends SurfaceView implements Runnable {
             enemies[i].update(player.getSpeed());
 
             if (Rect.intersects(player.getDetectCollision(),enemies[i].getDetectCollisoin())){
+                boom.setX(enemies[i].getX());
+                boom.setY(enemies[i].getY());
                 enemies[i].setX(-200);
+                score++;
             }
         }
 
