@@ -3,6 +3,7 @@ package com.niranjan2054.spacejet.modal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 import android.widget.ScrollView;
 
 import com.niranjan2054.spacejet.R;
@@ -33,6 +34,10 @@ public class Player {
     private int maxY;
     private int minY;
 
+
+    //initializing the object
+    private Rect detectCollision;
+
     public Player(Context context, int screenX, int screenY){
        x = 75;
        y = 50;
@@ -42,6 +47,8 @@ public class Player {
        boosting = false;
        minY = 0;
        maxY = screenY-bitmap.getHeight();
+
+       detectCollision = new Rect(x,y,bitmap.getWidth(),bitmap.getHeight());
     }
     public void setBoosting(){
         boosting = true;
@@ -86,5 +93,15 @@ public class Player {
         }else if(y>maxY){
             y = maxY;
         }
+
+        //adding top,button,left and right to the rect object;
+        detectCollision.left = x;
+        detectCollision.right = bitmap.getWidth() +x;
+        detectCollision.top = y;
+        detectCollision.bottom = y + bitmap.getHeight();
+    }
+
+    public Rect getDetectCollision() {
+        return detectCollision;
     }
 }

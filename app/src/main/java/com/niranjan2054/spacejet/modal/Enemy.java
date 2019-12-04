@@ -3,6 +3,7 @@ package com.niranjan2054.spacejet.modal;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Rect;
 
 import com.niranjan2054.spacejet.R;
 
@@ -22,6 +23,8 @@ public class Enemy {
     private int maxY;
     private int minY;
 
+    private Rect detectCollisoin;
+
     public Enemy(Context context,int screenX, int screenY){
         bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.enemy);
 
@@ -37,7 +40,13 @@ public class Enemy {
         if (y<bitmap.getHeight()){
             y = bitmap.getHeight();
         }
+        detectCollisoin = new Rect(x,y,bitmap.getWidth(),bitmap.getHeight());
     }
+
+    public Rect getDetectCollisoin() {
+        return detectCollisoin;
+    }
+
     public void update(int playerSpeed){
         x-=playerSpeed;
         x-=speed;
@@ -50,6 +59,12 @@ public class Enemy {
                 y = bitmap.getHeight();
             }
         }
+
+        //Adding the top, lef, bottom and right of the rect object
+        detectCollisoin.left = x;
+        detectCollisoin.right = x +bitmap.getWidth();
+        detectCollisoin.top = y;
+        detectCollisoin.bottom = y + bitmap.getHeight();
     }
 
     public int getX() {
@@ -66,5 +81,9 @@ public class Enemy {
 
     public Bitmap getBitmap() {
         return bitmap;
+    }
+
+    public void setX(int x) {
+        this.x = x;
     }
 }
