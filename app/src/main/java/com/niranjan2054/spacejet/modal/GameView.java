@@ -101,11 +101,13 @@ public class GameView extends SurfaceView implements Runnable {
             case MotionEvent.ACTION_UP:
                 //When the user presses on the screen
                 //we will do something here
+                player.stopBoosting();
                 Toast.makeText(getContext(), "Screen press", Toast.LENGTH_SHORT).show();
                 break;
             case MotionEvent.ACTION_DOWN:
                 //when the user releases the screen
                 //do some thing here
+                player.setBoosting();
                 Toast.makeText(getContext(), "Screen Released", Toast.LENGTH_SHORT).show();
                 break;
         }

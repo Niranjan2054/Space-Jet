@@ -43,7 +43,12 @@ public class Player {
        minY = 0;
        maxY = screenY-bitmap.getHeight();
     }
-
+    public void setBoosting(){
+        boosting = true;
+    }
+    public void stopBoosting(){
+        boosting = false;
+    }
     public Bitmap getBitmap() {
         return bitmap;
     }
@@ -76,10 +81,10 @@ public class Player {
         y-= speed + GRAVITY;
 
         //Controlling the ship so that it doesnot go out of the screen
-//        if(y<minY){
-//            y = minY;
-//        }else if(y>maxY){
-//            y = maxY;
-//        }
+        if(y<minY){
+            y = minY;
+        }else if(y>maxY){
+            y = maxY;
+        }
     }
 }
