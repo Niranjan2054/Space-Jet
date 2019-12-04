@@ -25,7 +25,14 @@ public class GameView extends SurfaceView implements Runnable {
     private Thread gameThread = null;
 
     //Adding a Star Array List
-    private ArrayList<Star> stars = new ArrayList<>();
+    private Star[] stars;
+    private int starCount = 50;
+
+
+    //Adding Enemies object array
+    private Enemy[] enemies;
+    private int enemyCount = 3;
+
 
     public GameView(Context context,int screenX, int screenY) {
         super(context);
@@ -37,10 +44,14 @@ public class GameView extends SurfaceView implements Runnable {
         paint = new Paint();
 
         //Adding 100 stars and can be increase
-        int starNums = 50;
-        for(int i =0;i< starNums;i++){
-            Star s = new Star(screenX,screenY);
-            stars.add(s);
+        stars = new Star[starCount];
+        for(int i =0;i< starCount;i++){
+           stars[i] = new Star(screenX,screenY);
+        }
+        //initializing new enemies
+        enemies = new Enemy[enemyCount];
+        for(int i =0; i<enemyCount;i++){
+            enemies[i] = new Enemy(context,screenX,screenY);
         }
     }
 
@@ -71,9 +82,9 @@ public class GameView extends SurfaceView implements Runnable {
             //drawing the background color for canvas
             canvas.drawColor(Color.BLACK);
             //Drawing all stars
-            for(Star s: stars){
-                paint.setStrokeWidth(s.getStarWidth());
-                canvas.drawPoint(s.getX(),s.getY(),paint);
+            for(int i =0;i<starCount;i++){
+                paint.setStrokeWidth(stars[i].getStarWidth());
+                canvas.drawPoint(stars[i].getX(),stars[i].getY(),paint);
             }
 
             //Drawing the player
@@ -84,6 +95,13 @@ public class GameView extends SurfaceView implements Runnable {
                     paint);
             //Unlocking the canvas
 
+            for(int i=0;i<enemyCount;i++){
+                canvas.drawBitmap(
+                        enemies[i].getBitmap(),
+                        enemies[i].getX(),
+                        enemies[i].getY(),
+                        paint);
+            }
 
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
@@ -99,8 +117,12 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void update() {
         player.update();
-        for(Star s: stars){
-            s.update(player.getSpeed());
+        for(int i=0;i<starCount;i++){
+            stars[i].update(player.getSpeed());
+        }
+
+        for(int i=0;i<enemyCount;i++){
+            enemies[i].update(player.getSpeed());
         }
     }
 
