@@ -6,8 +6,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Printer;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 public class GameView extends SurfaceView implements Runnable {
     volatile boolean playing;
@@ -91,5 +93,22 @@ public class GameView extends SurfaceView implements Runnable {
         playing = true;
         gameThread = new Thread(this);
         gameThread.start();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch(event.getAction() & event.ACTION_MASK){
+            case MotionEvent.ACTION_UP:
+                //When the user presses on the screen
+                //we will do something here
+                Toast.makeText(getContext(), "Screen press", Toast.LENGTH_SHORT).show();
+                break;
+            case MotionEvent.ACTION_DOWN:
+                //when the user releases the screen
+                //do some thing here
+                Toast.makeText(getContext(), "Screen Released", Toast.LENGTH_SHORT).show();
+                break;
+        }
+        return true;
     }
 }
