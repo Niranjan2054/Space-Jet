@@ -35,7 +35,8 @@ public class GameView extends SurfaceView implements Runnable {
     private int enemyCount = 3;
 
     private int score =0;
-    private int enemyLive = 3;
+    private int enemyEscape = 0;
+    private int totalEnemyEscape = 5;
 
     private Boom boom;
     public GameView(Context context,int screenX, int screenY) {
@@ -114,7 +115,7 @@ public class GameView extends SurfaceView implements Runnable {
                     paint);
             paint.setColor(Color.WHITE);
             paint.setTextSize(40);
-            canvas.drawText("Score: "+score+"                  Enemy Live: "+enemyLive,40,40,paint);
+            canvas.drawText("Score: "+score+"                  Enemy Live: "+enemyEscape+"/"+totalEnemyEscape,40,40,paint);
 
 
             surfaceHolder.unlockCanvasAndPost(canvas);
@@ -136,9 +137,14 @@ public class GameView extends SurfaceView implements Runnable {
         for(int i=0;i<starCount;i++){
             stars[i].update(player.getSpeed());
         }
-
+        boolean b;
         for(int i=0;i<enemyCount;i++){
-            enemies[i].update(player.getSpeed());
+            b = enemies[i].update(player.getSpeed());
+            if (b){
+                enemyEscape++;
+            }
+            if (enemyEscape>=totalEnemyEscape){
+            }
 
             if (Rect.intersects(player.getDetectCollision(),enemies[i].getDetectCollisoin())){
                 boom.setX(enemies[i].getX());

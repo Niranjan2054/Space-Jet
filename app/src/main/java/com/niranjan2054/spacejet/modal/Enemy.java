@@ -47,9 +47,14 @@ public class Enemy {
         return detectCollisoin;
     }
 
-    public void update(int playerSpeed){
+    public boolean update(int playerSpeed){
         x-=playerSpeed;
         x-=speed;
+        //Adding the top, lef, bottom and right of the rect object
+        detectCollisoin.left = x;
+        detectCollisoin.right = x +bitmap.getWidth();
+        detectCollisoin.top = y;
+        detectCollisoin.bottom = y + bitmap.getHeight();
         if(x<minX - bitmap.getWidth()){
             Random gen = new Random();
             speed = gen.nextInt(10)+10;
@@ -58,13 +63,9 @@ public class Enemy {
             if(y<bitmap.getHeight()){
                 y = bitmap.getHeight();
             }
+            return true;
         }
-
-        //Adding the top, lef, bottom and right of the rect object
-        detectCollisoin.left = x;
-        detectCollisoin.right = x +bitmap.getWidth();
-        detectCollisoin.top = y;
-        detectCollisoin.bottom = y + bitmap.getHeight();
+        return false;
     }
 
     public int getX() {
