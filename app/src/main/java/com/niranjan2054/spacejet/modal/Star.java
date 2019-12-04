@@ -27,18 +27,18 @@ public class Star {
         x-=playerSpeed;
         x-=speed;
         if (x<0){
-            x=maxX;
+            x=this.maxX;
             Random generator = new Random();
-            y = generator.nextInt(maxY);
+            y = generator.nextInt(this.maxY);
             speed = generator.nextInt(15);
         }
     }
 
     public float getStarWidth(){
         float minX = 1.0f;
-        float maxX = 4.0f;
+        float maxX = 10.0f;
         Random rand = new Random();
-        float finalX = rand.nextFloat() *(maxX-minX) + maxX;
+        float finalX = rand.nextFloat() *(this.maxX-this.minX) + this.maxX;
         return finalX;
     }
 

@@ -11,6 +11,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class GameView extends SurfaceView implements Runnable {
     volatile boolean playing;
 
@@ -21,6 +23,10 @@ public class GameView extends SurfaceView implements Runnable {
     private SurfaceHolder surfaceHolder;
 
     private Thread gameThread = null;
+
+    //Adding a Star Array List
+    private ArrayList<Star> stars = new ArrayList<>();
+
     public GameView(Context context,int screenX, int screenY) {
         super(context);
         //initializing player object
@@ -29,6 +35,13 @@ public class GameView extends SurfaceView implements Runnable {
         //initializing drawing object
         surfaceHolder = getHolder();
         paint = new Paint();
+
+        //Adding 100 stars and can be increase
+        int starNums = 50;
+        for(int i =0;i< starNums;i++){
+            Star s = new Star(screenX,screenY);
+            stars.add(s);
+        }
     }
 
     public GameView(Context context, AttributeSet attrs) {
@@ -57,6 +70,12 @@ public class GameView extends SurfaceView implements Runnable {
             canvas = surfaceHolder.lockCanvas();
             //drawing the background color for canvas
             canvas.drawColor(Color.BLACK);
+            //Drawing all stars
+            for(Star s: stars){
+                paint.setStrokeWidth(s.getStarWidth());
+                canvas.drawPoint(s.getX(),s.getY(),paint);
+            }
+
             //Drawing the player
             canvas.drawBitmap(
                     player.getBitmap(),
@@ -64,6 +83,8 @@ public class GameView extends SurfaceView implements Runnable {
                     player.getY(),
                     paint);
             //Unlocking the canvas
+
+
             surfaceHolder.unlockCanvasAndPost(canvas);
         }
     }
@@ -78,6 +99,9 @@ public class GameView extends SurfaceView implements Runnable {
 
     private void update() {
         player.update();
+        for(Star s: stars){
+            s.update(player.getSpeed());
+        }
     }
 
     public  void pause(){
