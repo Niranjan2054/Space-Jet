@@ -3,6 +3,7 @@ package com.niranjan2054.spacejet;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
@@ -21,7 +22,8 @@ protected ImageView buttonPlay;
         buttonPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Play Now", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this,GameActivity.class);
+                startActivity(intent);
             }
         });
     }
