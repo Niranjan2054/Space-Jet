@@ -175,6 +175,7 @@ public class GameView extends SurfaceView implements Runnable {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         switch(event.getAction() & event.ACTION_MASK){
             case MotionEvent.ACTION_UP:
                 //When the user presses on the screen
