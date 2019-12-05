@@ -10,6 +10,7 @@ import com.niranjan2054.spacejet.R;
 import java.util.Random;
 
 public class Enemy {
+    public static int noOfLive =0;
     private Bitmap bitmap;
     private int x;
     private int y;
@@ -47,15 +48,22 @@ public class Enemy {
         return detectCollisoin;
     }
 
-    public boolean update(int playerSpeed){
-        x-=playerSpeed;
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void update(int playerSpeed){
+//        x-=playerSpeed;
         x-=speed;
         //Adding the top, lef, bottom and right of the rect object
         detectCollisoin.left = x;
         detectCollisoin.right = x +bitmap.getWidth();
         detectCollisoin.top = y;
         detectCollisoin.bottom = y + bitmap.getHeight();
-        if(x<minX - bitmap.getWidth()){
+        if(x<=minX - bitmap.getWidth() || y==-2000){
+            if(y!=-2000){
+                noOfLive++;
+            }
             Random gen = new Random();
             speed = gen.nextInt(10)+10;
             x = maxX;
@@ -63,9 +71,7 @@ public class Enemy {
             if(y<bitmap.getHeight()){
                 y = bitmap.getHeight();
             }
-            return true;
         }
-        return false;
     }
 
     public int getX() {
@@ -86,5 +92,9 @@ public class Enemy {
 
     public void setX(int x) {
         this.x = x;
+    }
+
+    public static int getNoOfLive() {
+        return noOfLive;
     }
 }

@@ -32,10 +32,9 @@ public class GameView extends SurfaceView implements Runnable {
 
     //Adding Enemies object array
     private Enemy[] enemies;
-    private int enemyCount = 3;
+    private int enemyCount = 5;
 
     private int score =0;
-    private int enemyEscape = 0;
     private int totalEnemyEscape = 5;
 
     private Boom boom;
@@ -115,8 +114,13 @@ public class GameView extends SurfaceView implements Runnable {
                     paint);
             paint.setColor(Color.WHITE);
             paint.setTextSize(40);
-            canvas.drawText("Score: "+score+"                  Enemy Live: "+enemyEscape+"/"+totalEnemyEscape,40,40,paint);
+            canvas.drawText("Score: "+score+"                  Enemy Live: "+Enemy.getNoOfLive()+"/"+totalEnemyEscape,40,40,paint);
 
+            if (Enemy.getNoOfLive()>=totalEnemyEscape){
+                paint.setColor(Color.WHITE);
+                paint.setTextSize(180);
+                canvas.drawText("Game Over",200,400,paint);
+            }
 
             surfaceHolder.unlockCanvasAndPost(canvas);
             boom.setX(-250);
@@ -127,6 +131,9 @@ public class GameView extends SurfaceView implements Runnable {
     private void control() {
         try{
             gameThread.sleep(17);
+            if (Enemy.getNoOfLive()==5){
+                pause();
+            }
         }catch (InterruptedException e){
             e.printStackTrace();
         }
@@ -139,17 +146,12 @@ public class GameView extends SurfaceView implements Runnable {
         }
         boolean b;
         for(int i=0;i<enemyCount;i++){
-            b = enemies[i].update(player.getSpeed());
-            if (b){
-                enemyEscape++;
-            }
-            if (enemyEscape>=totalEnemyEscape){
-            }
+            enemies[i].update(player.getSpeed());
 
             if (Rect.intersects(player.getDetectCollision(),enemies[i].getDetectCollisoin())){
                 boom.setX(enemies[i].getX());
                 boom.setY(enemies[i].getY());
-                enemies[i].setX(-200);
+                enemies[i].setY(-2000);
                 score++;
             }
         }
